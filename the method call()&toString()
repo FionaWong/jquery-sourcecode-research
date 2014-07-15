@@ -20,3 +20,6 @@
 object.prototype.toString 是object的方法，返回结果"[object object]"这种格式
 Function 对象继承了Object,但是在Function.prototype里面重写了toString 的方法，返回结果是方法的文本
 所以在用toString的时候，一定要看引用指向谁，是function还是object
+
+//the method call()
+在param的作用域里面执行call方法前面的funcion
