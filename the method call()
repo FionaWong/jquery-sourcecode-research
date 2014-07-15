@@ -1,18 +1,22 @@
-  var class2type ={};
-	var core_toString = class2type.toString;//core_toString  的指针指向object prototype 的toString 方法
-
-	jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
-	  class2type[ "[object " + name + "]" ] = name.toLowerCase();
-  });
+	var class2type ={};//定义引用类型的集合
+  	var core_toString = class2type.toString;//core_toString  的指针指向object prototype 的toString 方法
+  	jQuery.each("Boolean Number String Function Array Date RegExp Object Error".split(" "), function(i, name) {
+  		//引用类型集合中存放object.prototype.toString()返回格式的数组
+		class2type[ "[object " + name + "]" ] = name.toLowerCase();
+  	});
 	
-
-	var core_valueof = class2type.valueOf;
-	type = function( obj ) {
+	type = function( obj ) {//type 方法是用来求传入参数的类型
 		if ( obj == null ) {
 			return String( obj );
 		}
 
-		return typeof obj === "object" || typeof obj === "function" ?
-			class2type[ core_toString.call(obj) ] || "object" ://调用 object prototype 的toString 方法
-			typeof obj;
+	return typeof obj === "object" || typeof obj === "function" ?
+		class2type[ core_toString.call(obj) ] || "object" ://调用 object prototype 的toString 方法
+		typeof obj;
 	};	
+//调用core_toString.call(“this is a test”) 结果是："[object Object]"
+//调用 Function.toString("111") 结果是：	"function Function() {\n [native code]\n}"
+//这是为什么呢？
+object.prototype.toString 是object的方法，返回结果"[object object]"这种格式
+Function 对象继承了Object,但是在Function.prototype里面重写了toString 的方法，返回结果是方法的文本
+所以在用toString的时候，一定要看引用指向谁，是function还是object
